@@ -1,0 +1,43 @@
+package Seleniumdrop;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class drop1 {
+	
+
+	public static void main(String[] args) throws InterruptedException{
+		
+		ChromeOptions option=new ChromeOptions();
+		option.addArguments("--remote-allow-origins=*");
+		WebDriverManager.chromedriver().setup();
+	      WebDriver driver=new ChromeDriver(option);
+		driver.get("https://www.google.com/");
+		
+		driver.findElement(By.xpath("//input[@title='Search']")).sendKeys("selenium");
+		Thread.sleep(3000);  // include it because it will take some time to load
+		
+		List<WebElement>list=driver.findElements(By.xpath("//div[contains(@class,'wM6W7d')]//span"));
+		System.out.println("The size of drop down "+list.size());
+		
+		for(int i=0;i<list.size();i++) {
+			String text=list.get(i).getText();
+			System.out.println(text);
+			
+			if(text.equals("selenium interview questions")) {
+				list.get(i).click();
+				break;
+			}
+		}
+		// TODO Auto-generated method stub
+
+	}
+
+}
